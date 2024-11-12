@@ -19,54 +19,61 @@ class PokemonDetailsActivity : AppCompatActivity() {
         binding = ActivityPokemonDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Obtendo o ID do Pokémon, com verificação segura de valor
+
         val id = intent.getStringExtra("id")?.toIntOrNull() ?: 0
         viewModel.fetchPokemon(id)
 
-        // Observando as mudanças nos dados do Pokémon
         viewModel.pokemonData.observe(this) { pokemon ->
-            // Atualizando os dados de texto
-            binding.tvPokemonId.text = pokemon.id.toString()
+
+            binding.tvPokemonId.text = buildString {
+                append('#')
+                append(pokemon.id.toString())
+            }
             binding.tvName.text = pokemon.name
 
-            // Carregando as imagens usando Glide com verificações e placeholders
+            binding.pbHp.progress = pokemon.hp!!
+            binding.pbAttack.progress = pokemon.attack!!
+            binding.pbDefesa.progress = pokemon.defense!!
+            binding.pbSpecialAttack.progress = pokemon.specialAttack!!
+            binding.pbSpecialDefesa.progress = pokemon.specialDefense!!
+            binding.pbSpeed.progress = pokemon.speed!!
             pokemon.officialArtwork?.let {
                 Glide.with(this)
                     .load(it)
-                    //.placeholder(R.drawable.loading)
-                    .error(R.drawable.poke_logo)    // Imagem de erro
+                    .placeholder(R.drawable.loading)
+                    .error(R.drawable.poke_logo)
                     .into(binding.ivOfficialArtwork)
             }
 
             pokemon.frontDefault?.let {
                 Glide.with(this)
                     .load(it)
-                    //.placeholder(R.drawable.loading)
-                    .error(R.drawable.poke_logo)    // Imagem de erro
+                    .placeholder(R.drawable.loading)
+                    .error(R.drawable.poke_logo)
                     .into(binding.ivFrontDefault)
             }
 
             pokemon.backDefault?.let {
                 Glide.with(this)
                     .load(it)
-                    //.placeholder(R.drawable.loading)
-                    .error(R.drawable.poke_logo)    // Imagem de erro
+                    .placeholder(R.drawable.loading)
+                    .error(R.drawable.poke_logo)
                     .into(binding.ivBackDefault)
             }
 
             pokemon.frontShiny?.let {
                 Glide.with(this)
                     .load(it)
-                    //.placeholder(R.drawable.loading)
-                    .error(R.drawable.poke_logo)    // Imagem de erro
+                    .placeholder(R.drawable.loading)
+                    .error(R.drawable.poke_logo)
                     .into(binding.ivFrontShiny)
             }
 
             pokemon.backShiny?.let {
                 Glide.with(this)
                     .load(it)
-                    //.placeholder(R.drawable.loading)
-                    .error(R.drawable.poke_logo)    // Imagem de erro
+                    .placeholder(R.drawable.loading)
+                    .error(R.drawable.poke_logo)
                     .into(binding.ivBackShiny)
             }
         }
