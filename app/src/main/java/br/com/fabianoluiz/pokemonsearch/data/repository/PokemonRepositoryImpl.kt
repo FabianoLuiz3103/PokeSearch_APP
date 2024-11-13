@@ -21,4 +21,12 @@ class PokemonRepositoryImpl(
         }
     }
 
+    override suspend fun getHistoryPokemon(): List<Pokemon> {
+        return pokemonDao.getHistoryPokemons().map { it.toPokemon() }
+    }
+
+    override suspend fun deleteItemHistory(id: Int){
+        val cachedPokemon = pokemonDao.getPokemon(id)
+        cachedPokemon?.let { pokemonDao.delete(cachedPokemon) }
+    }
 }

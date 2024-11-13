@@ -5,8 +5,11 @@ import br.com.fabianoluiz.pokemonsearch.data.local.AppDatabase
 import br.com.fabianoluiz.pokemonsearch.data.remote.api.PokemonService
 import br.com.fabianoluiz.pokemonsearch.data.repository.PokemonRepositoryImpl
 import br.com.fabianoluiz.pokemonsearch.domain.repository.PokemonRepository
+import br.com.fabianoluiz.pokemonsearch.domain.usecase.DeleteItemHistoryUseCase
+import br.com.fabianoluiz.pokemonsearch.domain.usecase.GetHistoryPokemonUseCase
 import br.com.fabianoluiz.pokemonsearch.domain.usecase.GetPokemonUseCase
 import br.com.fabianoluiz.pokemonsearch.presentation.detail.PokemonDetailViewModel
+import br.com.fabianoluiz.pokemonsearch.presentation.history.PokemonHistoryViewModel
 import br.com.fabianoluiz.pokemonsearch.presentation.main.MainViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.scope.get
@@ -39,8 +42,11 @@ val repositoryModule = module {
 }
 val useCaseModule = module {
     factory { GetPokemonUseCase(get()) }
+    factory { GetHistoryPokemonUseCase(get()) }
+    factory { DeleteItemHistoryUseCase(get()) }
 }
 val viewModelModule = module {
     viewModel { MainViewModel() }
     viewModel { PokemonDetailViewModel(get()) }
+    viewModel { PokemonHistoryViewModel(get(), get())}
 }

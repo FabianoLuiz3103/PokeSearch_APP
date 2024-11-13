@@ -1,6 +1,7 @@
 package br.com.fabianoluiz.pokemonsearch.data.local.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -15,4 +16,10 @@ interface PokemonDao {
 
     @Query("SELECT * FROM pokemon_table WHERE id = :id LIMIT 1")
     suspend fun getPokemon(id: Int): PokemonEntity?
+
+    @Query("SELECT * FROM pokemon_table")
+    suspend fun getHistoryPokemons(): List<PokemonEntity>
+
+    @Delete
+    suspend fun delete(pokemon: PokemonEntity)
 }
